@@ -5,13 +5,18 @@
     android:orientation="vertical"
     >
 
-    <com.github.siyamed.shapeimageview.CircularImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ImageView
         android:layout_width="40dp"
         android:layout_height="60dp"
-        android:src="@drawable/user"
         android:id="@+id/mainIcon"
-        app:siBorderColor="#fff"/>
+        android:src="@drawable/user"/>
+    <!--<com.github.siyamed.shapeimageview.CircularImageView-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:src="@drawable/user"-->
+        <!--android:id="@+id/mainIcon"-->
+        <!--app:siBorderColor="#fff"/>-->
 
     <TextView
         android:layout_width="wrap_content"

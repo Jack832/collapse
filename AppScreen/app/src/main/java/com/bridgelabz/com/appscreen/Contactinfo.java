@@ -33,7 +33,6 @@ public class Contactinfo extends AppCompatActivity {
             data.add(current);
         }
         return data;
-
     }
 
     public static List<MyData> getdataall() {

@@ -33,4 +33,17 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="FontTheme" parent="AppTheme">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="MediaTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/primaryColor</item>
+    </style>
+    <style name="Temp" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

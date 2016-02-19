@@ -58,8 +58,6 @@ public class Adapter3 extends RecyclerView.Adapter<Adapter3.MyHolder>{
             Intent i = new Intent(context3,MediaDemo.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             v.getContext().startActivity(i);
-
-
         }
     }
 }

@@ -5,6 +5,8 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="action_search">Search</string>
+    <string name="mediaView">Media View</string>
+    <string name="AllMedia">All Media</string>
     <string-array name="tabs">
         <item>Content</item>
         <item>View</item>

@@ -29,14 +29,7 @@ public class demo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo1);
 
-        /*Snackbar snackbar = Snackbar
-                .make(coordinatorLayout, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
-        snackbar.show();*/
-
         toolbar = (Toolbar) findViewById(R.id.app_bar);
-
-
-//        t2.getBackground().setAlpha(0);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -49,7 +42,6 @@ public class demo extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             return;
-
         }
 
         int res = extras.getInt("Bitmap");
@@ -59,18 +51,13 @@ public class demo extends Activity {
         imageView.setImageResource(res);
         t2.setTitle(tit);
 
-
-
         toolbar.inflateMenu(R.menu.cropimgmenu);
-
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
                 int id = item.getItemId();
-
-
                 if (id == R.id.calls) {
 
                     String posted_by = "111-333-222-4";
@@ -79,7 +66,6 @@ public class demo extends Activity {
                     Intent intent = new Intent(Intent.ACTION_CALL);
                     intent.setData(Uri.parse(uri));
                     startActivity(intent);
-
                 }
                 if (id == R.id.chats) {
 
@@ -125,11 +111,6 @@ public class demo extends Activity {
 
                         // Showing Alert Message
                         alertDialog.show();
-
-
-//                Temp();
-
-
                     }
 
                 }
@@ -142,7 +123,6 @@ public class demo extends Activity {
                 return true;
             }
 
-
             public void Temp() {
 
                 Log.d("In SMS", "In SMS");
@@ -150,18 +130,16 @@ public class demo extends Activity {
                 String smsBody = "This is an SMS!";
 
                 Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-// Invokes only SMS/MMS clients
+                // Invokes only SMS/MMS clients
                 smsIntent.setType("vnd.android-dir/mms-sms");
-// Specify the Phone Number
+                // Specify the Phone Number
                 smsIntent.putExtra("address", phoneNumber);
-// Specify the Message
+                // Specify the Message
                 smsIntent.putExtra("sms_body", smsBody);
 
-// Shoot!
+                // Shoot!
                 startActivity(smsIntent);
             }
         });
-        }
-
-
     }
+}

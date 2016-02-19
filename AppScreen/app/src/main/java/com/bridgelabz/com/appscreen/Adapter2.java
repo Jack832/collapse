@@ -56,7 +56,6 @@ public class Adapter2 extends RecyclerView.Adapter<Adapter2.MyHolder> {
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView icon2;
 
-        //ImageView img;
         public MyHolder(View itemView) {
             super(itemView);
             icon2 = (ImageView) itemView.findViewById(R.id.imgho);

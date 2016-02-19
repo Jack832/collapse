@@ -59,9 +59,7 @@ public class Add_Content extends ActionBarActivity {
         catch (ActivityNotFoundException e) {
 
         }
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -76,9 +74,7 @@ public class Add_Content extends ActionBarActivity {
                     Bitmap photo = extras.getParcelable("data");
                     imageView.setImageBitmap(photo);
                 }
-
             }
         }
-
     }
 }
