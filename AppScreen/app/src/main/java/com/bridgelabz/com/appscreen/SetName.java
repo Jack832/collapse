@@ -1,14 +1,14 @@
 package com.bridgelabz.com.appscreen;
 
 import android.content.Intent;
-<<<<<<< HEAD
+
 import android.os.Bundle;
-=======
+
 import android.database.Cursor;
 import android.os.Bundle;
 
 import android.provider.ContactsContract;
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -20,11 +20,8 @@ import android.widget.Toast;
 
 import com.bridgelabz.com.appscreen.Model.Registration_Model;
 
-<<<<<<< HEAD
-=======
 import java.util.Set;
 
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
 /**
  * Created by bridgelabz3 on 17/2/16.
  */

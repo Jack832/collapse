@@ -54,6 +54,8 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder> 
         holder.shareIcon.setImageResource(current.shareIcon);
     }
 
+
+
     @Override
     public int getItemCount() {
         return data.size();
@@ -119,7 +121,11 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder> 
             mainIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(new Intent(context, MediaDemo.class));
+//                    context.startActivity(new Intent(context, demo.class));
+                    Intent intent=new Intent(context,demo.class);
+                    intent.putExtra("Bitmap", current.icon);
+                    intent.putExtra("Title", current.title);
+                    v.getContext().startActivity(intent);
                 }
             });
 

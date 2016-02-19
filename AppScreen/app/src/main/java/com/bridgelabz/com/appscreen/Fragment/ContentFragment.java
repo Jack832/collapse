@@ -46,13 +46,11 @@ public class ContentFragment extends Fragment
     public static List<MyData> GetData()
     {
         List<MyData> data=new ArrayList<>();
-<<<<<<< HEAD
+
         int [] mainIcon={R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user, R.drawable.user};
         int[] shareIcon={R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share, R.drawable.share};
-=======
-        int [] mainIcon={R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user,R.drawable.user};
-        int[] shareIcon={R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share,R.drawable.share};
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
+
+
         String[] mainTitle={"Title1","Title2","Title3","Title1","Title2","Title3","Title1","Title2","Title3","Title1","Title2","Title3"};
         String[] statusTitle={"Opened","Clicked","Closed","Opened","Clicked","Closed","Opened","Clicked","Closed","Closed","Closed","Closed"};
         String[] timeTitle={"Today at 10AM","Yesterday","Today at 8PM","Today at 10AM","Yesterday","Today at 8PM","Today at 10AM","Yesterday","Today at 8PM","Today at 8PM","Today at 8PM","Today at 8PM"};

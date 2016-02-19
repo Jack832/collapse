@@ -6,11 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-<<<<<<< HEAD
-=======
-import com.bridgelabz.com.appscreen.MainActivity;
 
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
 /**
  * Created by bridgelabz3 on 16/2/16.
  */

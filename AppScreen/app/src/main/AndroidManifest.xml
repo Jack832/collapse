@@ -10,26 +10,18 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".SetName"
             android:parentActivityName=".Registration" />
-<<<<<<< HEAD
-=======
-
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
         <activity android:name=".Home"
             android:parentActivityName=".MainActivity"/>
-
         <activity android:name=".Login"
             android:parentActivityName=".Home"/>
-
         <activity android:name=".demo"
             android:parentActivityName=".Login"
             android:theme="@style/AppTheme.CustomTheme"/>
@@ -42,25 +34,17 @@
             android:parentActivityName=".Login"/>
 
         <activity android:name=".Registration"
-            android:parentActivityName=".Login"/>
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".Contactinfo"
+            android:parentActivityName=".Login">
 
+        </activity>
+        <activity android:name=".Add_Content"
+            android:parentActivityName=".Login"/>
         <activity android:name=".Media.VideoPlay"
             android:label="@string/mediaView"
             android:parentActivityName=".Login"/>
 
-        <activity android:name=".Contactinfo"
-            android:parentActivityName=".Login">
-        </activity>
-
-        <activity android:name=".Add_Content"
-            android:parentActivityName=".Login"/>
-<<<<<<< HEAD
-=======
-
-        <activity android:name=".Welcome"
-            android:parentActivityName=".Registration"/>
-
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
         <receiver android:name=".IncomingSms" android:enabled="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
@@ -71,10 +55,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.READ_SMS" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.READ_SMS" />
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>

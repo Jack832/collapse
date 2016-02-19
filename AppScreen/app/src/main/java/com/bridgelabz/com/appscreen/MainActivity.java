@@ -10,10 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bridgelabz.com.appscreen.Model.LoginModel;
-<<<<<<< HEAD
-=======
-import com.bridgelabz.com.appscreen.Model.Model;
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
+
 
 public class MainActivity extends AppCompatActivity {
 

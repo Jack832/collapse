@@ -1,13 +1,13 @@
 package com.bridgelabz.com.appscreen;
 
-<<<<<<< HEAD
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
-=======
+
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
+
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

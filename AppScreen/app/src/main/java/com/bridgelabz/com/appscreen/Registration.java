@@ -164,10 +164,9 @@ public class Registration extends AppCompatActivity
                 if(res == true)
                 {
                     new ProgressTask(Registration.this).execute();
-<<<<<<< HEAD
-=======
+
                     Log.e("registration","registration");
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
+
 //                    Registration_Controller rc=new Registration_Controller();
 //                    rc.Temp();
                     //SendSMS();
@@ -262,10 +261,9 @@ public class Registration extends AppCompatActivity
             this.dialog.setMax(20);
             this.dialog.setProgress(0);
             this.dialog.show();
-<<<<<<< HEAD
-=======
+
             Log.e("In Preexecute","In Preexecute");
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
+
         }
 
         @Override
@@ -285,10 +283,9 @@ public class Registration extends AppCompatActivity
         protected void onPostExecute(Void aVoid) {
             if(dialog.isShowing())
                 dialog.dismiss();
-<<<<<<< HEAD
-=======
+
             Log.e("SMS sent","SMS sent");
->>>>>>> 0914659e6e7bd4d478f82076ed201c557c3d9495
+
         }
     }
 }
