@@ -1,6 +1,5 @@
 package com.bridgelabz.com.appscreen;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bridgelabz.com.appscreen.Fragment.ContentFragment;
+import com.bridgelabz.com.appscreen.Fragment.NavigationDrawerFragment;
+import com.bridgelabz.com.appscreen.Media.VideoPlay;
 import com.bridgelabz.com.appscreen.Tbas.SlidingTabLayout;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -48,9 +50,12 @@ public class Login extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        NavigationDrawerFragment drawerFragment=(NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+//        NavigationDrawerFragment drawerFragment=(NavigationDrawerFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+//        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+
+        NavigationDrawerFragment drawerFragment=(NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp((DrawerLayout)findViewById(R.id.drawer_layout),toolbar);
 
         mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 
@@ -92,34 +97,34 @@ public class Login extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_PICK);
-                // ******** code for crop image
-                intent.putExtra("crop", "true");
-                intent.putExtra("aspectX", 0);
-                intent.putExtra("aspectY", 0);
-                intent.putExtra("outputX", 200);
-                intent.putExtra("outputY", 150);
-
-                try {
-                    intent.putExtra("return-data", true);
-                    startActivityForResult(Intent.createChooser(intent, "select picture"), 1);
-                }
-                catch (ActivityNotFoundException e) {
-
-                }
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"select picture"),1);
+                Toast.makeText(Login.this,"Done....",Toast.LENGTH_SHORT).show();
+            }
+        });
+        buttonVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),VideoPlay.class));
             }
         });
 
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK)
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null)
         {
-            if(requestCode == 1)
-            {
-                Bundle extras = data.getExtras();
-                startActivity(new Intent(this,Add_Content.class).putExtras(extras));
-            }
+            Uri selectedImage = data.getData();
+//            Bundle bundle=new Bundle();
+//            bundle.putString(selectedImage.toString(), "key");
+
+            setContentView(R.layout.media_view);
+
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            ImageView imageView = (ImageView) findViewById(R.id.imageView);
+            imageView.setImageURI(selectedImage);
         }
     }
 
@@ -161,10 +166,10 @@ public class Login extends AppCompatActivity
                     myFragment= ContentFragment.getInstance(position);
                     break;
                 case VIEW:
-                    myFragment=ViewFragment.getInstance(position);
+                    myFragment= ViewFragment.getInstance(position);
                     break;
                 case CONTACTS:
-                    myFragment=ContactsFragment.getInstance(position);
+                    myFragment= ContactsFragment.getInstance(position);
                     break;
             }
             return myFragment;

@@ -1,10 +1,11 @@
 package com.bridgelabz.com.appscreen;
 
-import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bridgelabz.com.appscreen.Controller.Registration_Controller;
+
 import java.util.Random;
 
 /**
@@ -23,18 +26,22 @@ import java.util.Random;
  */
 public class Registration extends AppCompatActivity
 {
-    TextView phone_number,message1,message2;
-    EditText code1;
+    public static Registration instance;
+    TextView message1,message2;
+    EditText phone_number,code1;
     Spinner spinner;
-    Button registration;
+    Button registration,verify;
     String message;
     String phoneNo;
+    Context context;
+    int code = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        instance=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
         registration=(Button)findViewById(R.id.Registration);
-        phone_number=(TextView)findViewById(R.id.phone_number);
+        phone_number=(EditText)findViewById(R.id.phone_number);
         spinner = (Spinner) findViewById(R.id.spinner);
 
         code1=(EditText)findViewById(R.id.code1);
@@ -45,14 +52,17 @@ public class Registration extends AppCompatActivity
         message2.setText("Please confirm your country code and enter mobile number.");
 
         Random ran=new Random();
-        final int code= (100000 + ran.nextInt(900000));
+        code= (100000 + ran.nextInt(900000));
 
         message="Your number is verified. You have successfully registered shopping pad app. Your one time number is "+code;
 
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         final String phone = tm.getLine1Number();
 
-        phoneNo=phone;
+
+
+        //phoneNo=phone;
+
 
         final ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this, R.array.country, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -144,37 +154,126 @@ public class Registration extends AppCompatActivity
         registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(phone_number.getText().toString().equals(phone))
+                phoneNo=phone_number.getText().toString();
+                boolean res=false;
+                res= Registration_Controller.verifyNumber(phoneNo);
+
+                if(res == true)
                 {
-                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
-                    Toast.makeText(getApplicationContext(),"same",Toast.LENGTH_SHORT).show();
-                    SendSMS();
-                    mBuilder.setSmallIcon(R.drawable.notification);
-                    mBuilder.setContentTitle(phone);
-                    mBuilder.setContentText(message);
-                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    mNotificationManager.notify(111,mBuilder.build());
-                }
-                else if (phone_number.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(),"Please enter mobile number",Toast.LENGTH_SHORT).show();
+                    new ProgressTask(Registration.this).execute();
+//                    Registration_Controller rc=new Registration_Controller();
+//                    rc.Temp();
+                    //SendSMS();
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"Enter valid mobile number",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registration.this,"Please enter valid mobile number",Toast.LENGTH_LONG).show();
                 }
             }
         });
+//        Registration_Controller.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                 if(phone_number.getText().toString().equals(phone))
+//               {
+//                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext());
+//                    Toast.makeText(getApplicationContext(),"same",Toast.LENGTH_SHORT).show();
+//                    SendSMS();
+//                    mBuilder.setSmallIcon(R.drawable.notification);
+//                    mBuilder.setContentTitle(phone);
+//                    mBuilder.setContentText(message);
+//                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//                    mNotificationManager.notify(111,mBuilder.build());
+//                }
+//                else if (phone_number.getText().toString().equals("")) {
+//                    Toast.makeText(getApplicationContext(),"Please enter mobile number",Toast.LENGTH_SHORT).show();
+//                }
+//                else
+//                {
+//                    Toast.makeText(getApplicationContext(),"Enter valid mobile number",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+    }
+    public Registration getInstance()
+    {
+        return instance;
     }
     private void SendSMS()
     {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNo, null, message, null, null);
-            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+
+            Intent intent=new Intent("android.provider.Telephony.SMS_RECEIVED");
+            intent.putExtra("pdus", message);
+            sendBroadcast(intent);
+
+            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_SHORT).show();
+
         }
         catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
+        }
+    }
+    public void updateTheTextView(final String t) {
+        setContentView(R.layout.received_otp);
+        Registration.this.runOnUiThread(new Runnable() {
+            public void run() {
+                EditText textV1 = (EditText) findViewById(R.id.OTP);
+                textV1.setText("" + t);
+                textV1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            }
+        });
+
+        verify=(Button)findViewById(R.id.verify);
+
+        verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Registration.this,SetName.class);
+                i.putExtra("phno",phoneNo);
+                startActivity(i);
+                phone_number.setText("");
+            }
+        });
+    }
+
+    public class ProgressTask extends AsyncTask<Void,Void,Void>
+    {
+        public ProgressDialog dialog;
+        public ProgressTask(Registration registration)
+        {
+            context=registration;
+            dialog=new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Sending SMS");
+            this.dialog.setMax(20);
+            this.dialog.setProgress(0);
+            this.dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try
+            {
+                SendSMS();
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(dialog.isShowing())
+                dialog.dismiss();
         }
     }
 }

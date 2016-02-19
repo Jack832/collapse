@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SetName"
+            android:parentActivityName=".Registration" />
         <activity android:name=".Home"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".Login"
@@ -39,7 +41,15 @@
         </activity>
         <activity android:name=".Add_Content"
             android:parentActivityName=".Login"/>
+        <receiver android:name=".IncomingSms" android:enabled="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SEND_SMS" />

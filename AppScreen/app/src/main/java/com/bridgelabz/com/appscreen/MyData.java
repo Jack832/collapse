@@ -5,11 +5,11 @@ package com.bridgelabz.com.appscreen;
  */
 public class MyData
 {
-    int mainIcon;
-    int shareIcon;
-    String mainTitle;
-    String statusTitle;
-    String timeTitle;
-    String viewTitle;
-    String partTitle;
+    public int mainIcon;
+    public int shareIcon;
+    public String mainTitle;
+    public String statusTitle;
+    public String timeTitle;
+    public String viewTitle;
+    public String partTitle;
 }
