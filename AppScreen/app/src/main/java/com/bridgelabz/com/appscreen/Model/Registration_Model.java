@@ -17,7 +17,7 @@ public class Registration_Model extends Model
     public static final String COL_3="MobileNo";
 
     public Registration_Model(Context context) {
-        super(context);
+       super(context);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -58,5 +58,13 @@ public class Registration_Model extends Model
         }
         res.close();
         return flag;
+    }
+
+    // getting all the mobile number
+    public Cursor getMobileNumber()
+    {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(" SELECT "+COL_3+" FROM "+TABLE_NAME+" WHERE ID = 1",null);
+        return cursor;
     }
 }

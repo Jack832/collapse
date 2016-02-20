@@ -1,5 +1,6 @@
 package com.bridgelabz.com.appscreen;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,23 +31,23 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 /**
  * Created by bridgelabz3 on 20/1/16.
  */
-public class Login extends AppCompatActivity
-{
+public class Login extends AppCompatActivity {
     private ViewPager mPager;
     SlidingTabLayout mTabs;
     private Toolbar toolbar;
-    public static final int CONTENT =0;
-    public static final int VIEW =1;
-    public static final int CONTACTS=2;
+    public static final int CONTENT = 0;
+    public static final int VIEW = 1;
+    public static final int CONTACTS = 2;
+    public static final int SELECT_PICTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar=(Toolbar)findViewById(R.id.app_bar);
-        mTabs=(SlidingTabLayout)findViewById(R.id.tabs);
-        mPager=(ViewPager)findViewById(R.id.pager);
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        mTabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        mPager = (ViewPager) findViewById(R.id.pager);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -54,8 +55,8 @@ public class Login extends AppCompatActivity
 //                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
 //        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
-        NavigationDrawerFragment drawerFragment=(NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp((DrawerLayout)findViewById(R.id.drawer_layout),toolbar);
+        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
 
         mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 
@@ -63,20 +64,20 @@ public class Login extends AppCompatActivity
 
         mTabs.setViewPager(mPager);
 
-        ImageView imageView=new ImageView(this);
+        ImageView imageView = new ImageView(this);
         imageView.setImageResource(R.drawable.plus);
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
                 .setContentView(imageView)
                 .setBackgroundDrawable(R.drawable.button_action_red)
                 .build();
 
-        ImageView videoIcon=new ImageView(this);
+        ImageView videoIcon = new ImageView(this);
         videoIcon.setImageResource(R.drawable.video);
 
-        ImageView galleryIcon=new ImageView(this);
+        ImageView galleryIcon = new ImageView(this);
         galleryIcon.setImageResource(R.drawable.gallery);
 
-        ImageView audioIcon=new ImageView(this);
+        ImageView audioIcon = new ImageView(this);
         audioIcon.setImageResource(R.drawable.audio);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
@@ -95,36 +96,60 @@ public class Login extends AppCompatActivity
         buttonGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent,"select picture"),1);
+//                Toast.makeText(Login.this,"Done....",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
                 Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"select picture"),1);
-                Toast.makeText(Login.this,"Done....",Toast.LENGTH_SHORT).show();
+                intent.setAction(Intent.ACTION_PICK);
+                // ******** code for crop image
+                intent.putExtra("crop", "true");
+                intent.putExtra("aspectX", 0);
+                intent.putExtra("aspectY", 0);
+                intent.putExtra("outputX", 200);
+                intent.putExtra("outputY", 150);
+
+                try {
+                    intent.putExtra("return-data", true);
+                    startActivityForResult(Intent.createChooser(intent, "select picture"), SELECT_PICTURE);
+                } catch (ActivityNotFoundException e) {
+
+                }
             }
         });
+
+
         buttonVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),VideoPlay.class));
+                startActivity(new Intent(getApplicationContext(), VideoPlay.class));
             }
         });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null)
-        {
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
 //            Bundle bundle=new Bundle();
 //            bundle.putString(selectedImage.toString(), "key");
 
-            setContentView(R.layout.media_view);
+//            setContentView(R.layout.media_view);
+//
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
+//            ImageView imageView = (ImageView) findViewById(R.id.imageView);
+//            imageView.setImageURI(selectedImage);
 
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            ImageView imageView = (ImageView) findViewById(R.id.imageView);
-            imageView.setImageURI(selectedImage);
+            Bundle extras = data.getExtras();
+            startActivity(new Intent(this, Add_Content.class).putExtras(extras));
         }
     }
 
@@ -149,87 +174,84 @@ public class Login extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-    class MyPagerAdapter extends FragmentPagerAdapter
-    {
-        String[] tabText=getResources().getStringArray(R.array.tabs);
+
+    class MyPagerAdapter extends FragmentPagerAdapter {
+        String[] tabText = getResources().getStringArray(R.array.tabs);
+
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-            tabText=getResources().getStringArray(R.array.tabs);
+            tabText = getResources().getStringArray(R.array.tabs);
         }
+
         @Override
-        public Fragment getItem(int position)
-        {
-            Fragment myFragment=null;
-            switch (position)
-            {
+        public Fragment getItem(int position) {
+            Fragment myFragment = null;
+            switch (position) {
                 case CONTENT:
-                    myFragment= ContentFragment.getInstance(position);
+                    myFragment = ContentFragment.getInstance(position);
                     break;
                 case VIEW:
-                    myFragment= ViewFragment.getInstance(position);
+                    myFragment = ViewFragment.getInstance(position);
                     break;
                 case CONTACTS:
-                    myFragment= ContactsFragment.getInstance(position);
+                    myFragment = ContactsFragment.getInstance(position);
                     break;
             }
             return myFragment;
         }
+
         @Override
-        public CharSequence getPageTitle(int position)
-        {
+        public CharSequence getPageTitle(int position) {
             return tabText[position];
         }
+
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return 3;
         }
     }
 
-    public static class ViewFragment extends Fragment
-    {
+    public static class ViewFragment extends Fragment {
         private TextView textView;
-        public static ViewFragment getInstance(int position)
-        {
-            ViewFragment myFragment1=new ViewFragment();
-            Bundle args=new Bundle();
-            args.putInt("position",position);
+
+        public static ViewFragment getInstance(int position) {
+            ViewFragment myFragment1 = new ViewFragment();
+            Bundle args = new Bundle();
+            args.putInt("position", position);
             myFragment1.setArguments(args);
             return myFragment1;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View layout=inflater.inflate(R.layout.fragment_view,container,false);
-            textView=(TextView)layout.findViewById(R.id.textView);
-            Bundle bundle=getArguments();
-            if(bundle != null)
-            {
-                textView.setText("View Current selected page is: " +bundle.getInt("position"));
+            View layout = inflater.inflate(R.layout.fragment_view, container, false);
+            textView = (TextView) layout.findViewById(R.id.textView);
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                textView.setText("View Current selected page is: " + bundle.getInt("position"));
             }
             return layout;
         }
     }
-    public static class ContactsFragment extends Fragment
-    {
+
+    public static class ContactsFragment extends Fragment {
         private TextView textView;
-        public static ContactsFragment getInstance(int position)
-        {
-            ContactsFragment myFragment2=new ContactsFragment();
-            Bundle args=new Bundle();
-            args.putInt("position",position);
+
+        public static ContactsFragment getInstance(int position) {
+            ContactsFragment myFragment2 = new ContactsFragment();
+            Bundle args = new Bundle();
+            args.putInt("position", position);
             myFragment2.setArguments(args);
             return myFragment2;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View layout=inflater.inflate(R.layout.fragment_contacts,container,false);
-            textView=(TextView)layout.findViewById(R.id.textView);
-            Bundle bundle=getArguments();
-            if(bundle != null)
-            {
-                textView.setText("Contacts Current selected page is: " +bundle.getInt("position"));
+            View layout = inflater.inflate(R.layout.fragment_contacts, container, false);
+            textView = (TextView) layout.findViewById(R.id.textView);
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                textView.setText("Contacts Current selected page is: " + bundle.getInt("position"));
             }
             return layout;
         }

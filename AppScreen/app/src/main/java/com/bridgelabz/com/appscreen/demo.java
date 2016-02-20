@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bridgelabz.com.appscreen.Model.Registration_Model;
+
 /**
  * Created by bridgelabz5 on 27/1/16.
  */
@@ -22,12 +25,13 @@ public class demo extends Activity {
 
     Toolbar toolbar;
     Toolbar t2;
-
+    String ph_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo1);
+
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
 
@@ -60,7 +64,7 @@ public class demo extends Activity {
                 int id = item.getItemId();
                 if (id == R.id.calls) {
 
-                    String posted_by = "111-333-222-4";
+                    String posted_by =  ph_no;
 
                     String uri = "tel:" + posted_by.trim();
                     Intent intent = new Intent(Intent.ACTION_CALL);
@@ -126,7 +130,7 @@ public class demo extends Activity {
             public void Temp() {
 
                 Log.d("In SMS", "In SMS");
-                String phoneNumber = "9999999999";
+                String phoneNumber = ph_no;
                 String smsBody = "This is an SMS!";
 
                 Intent smsIntent = new Intent(Intent.ACTION_VIEW);
@@ -141,5 +145,17 @@ public class demo extends Activity {
                 startActivity(smsIntent);
             }
         });
+
+
+        //DATABASE OPERATIONS
+
+        Cursor cursor = new Registration_Model(this).getMobileNumber();
+        if(cursor.moveToFirst()) {
+            ph_no = cursor.getString(0);
+            Toast.makeText(demo.this, ph_no, Toast.LENGTH_SHORT).show();
+        }
+
+
+        //
     }
 }
