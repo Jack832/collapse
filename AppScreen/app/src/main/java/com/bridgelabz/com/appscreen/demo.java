@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bridgelabz.com.appscreen.Model.ContentModel;
 import com.bridgelabz.com.appscreen.Model.Registration_Model;
 
 /**
@@ -26,6 +27,7 @@ public class demo extends Activity {
     Toolbar toolbar;
     Toolbar t2;
     String ph_no;
+    ContentModel cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,11 @@ public class demo extends Activity {
             return;
         }
 
-        int res = extras.getInt("Bitmap");
+       // int res = extras.getInt("Bitmap");
         String tit = extras.getString("Title");
-        ImageView imageView = (ImageView) findViewById(R.id.cropImg1);
+       // ImageView imageView = (ImageView) findViewById(R.id.cropImg1);
         t2 = (Toolbar) findViewById(R.id.toolbar2);
-        imageView.setImageResource(res);
+       // imageView.setImageResource(res);
         t2.setTitle(tit);
 
         toolbar.inflateMenu(R.menu.cropimgmenu);
@@ -153,6 +155,17 @@ public class demo extends Activity {
         if(cursor.moveToFirst()) {
             ph_no = cursor.getString(0);
             Toast.makeText(demo.this, ph_no, Toast.LENGTH_SHORT).show();
+        }
+
+
+        cm= new ContentModel(demo.this);
+        String urlofimg="http://techclones.com/wp-content/uploads/2013/05/Blue1.png";
+        boolean insert=cm.insertimage(urlofimg);
+        if(insert){
+            Toast.makeText(demo.this, "inserted", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(demo.this, "not inserted ", Toast.LENGTH_SHORT).show();
         }
 
 

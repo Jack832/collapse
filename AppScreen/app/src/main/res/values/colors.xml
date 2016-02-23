@@ -16,7 +16,8 @@
     <color name="primarycolor1">#fafcfd</color>
     <color name="darkprimary">#5e61b9</color>
     <color name="accent">#06dede</color>
-    <color name="stroke">#d6cfc8</color><color name="rec">#e0e4e6</color>
+    <color name="stroke">#d6cfc8</color>
+    <color name="rec">#feffff</color>
 
 
     <color name="toolbarTextColor">#FFFFFF</color>

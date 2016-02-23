@@ -12,7 +12,7 @@ public class Model extends SQLiteOpenHelper
 {
     private static Model model;
     public static final String DATABASE_NAME="open_data";
-    public static final int DATABASE_VERSION=3;
+    public static final int DATABASE_VERSION=5;
 
     public Model(Context context) {
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
